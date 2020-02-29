@@ -28,6 +28,11 @@ body {
     font-size: 4em;
 }
 
+#time-text {
+    text-align: center;
+    font-size: 1em;
+}
+
 #depth-text {
     text-align: center;
     margin: 0;
