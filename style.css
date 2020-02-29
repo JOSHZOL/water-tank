@@ -11,7 +11,7 @@ body {
 
 #tank {
     position: relative;
-    height: 50%;
+    height: 100%;
     background: linear-gradient(to top, #16222a, #3a6073);
     overflow: hidden;
 }
