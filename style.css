@@ -1,0 +1,44 @@
+html {
+    height: 100%;
+    font-family: 'Quicksand', sans-serif;
+    color:#fff;
+}
+
+body {
+    margin: 0;
+    height: 100%;
+}
+
+#tank {
+    position: relative;
+    height: 50%;
+    background: linear-gradient(to top, #16222a, #3a6073);
+    overflow: hidden;
+}
+
+#depth {
+    position: absolute;
+    height: 80px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    font-weight: bold;
+    font-size: 4em;
+}
+
+#depth-text {
+    text-align: center;
+    margin: 0;
+}
+
+#water {
+    position: absolute;
+    height: 0%;
+    width: 100%;
+    bottom: 0px;
+    margin: 0;
+    background: linear-gradient(to top left, #0b537b 0%, #81d1c8 100%);
+    transition-duration: 0.75s;
+}
