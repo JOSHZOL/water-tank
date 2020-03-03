@@ -15,12 +15,7 @@ function gotResults(data) {
 {
     if (typeof(results) != 'undefined') 
     {
-        let timeValue = timeSince(results.feeds[0].created_at);
-        
-        if (document.getElementById("time-text").innerHTML != timeValue)
-        {
-            document.getElementById("time-text").innerHTML = timeValue;
-        }
+        document.getElementById("time-text").innerHTML = timeSince(results.feeds[0].created_at);
     }
     
     setTimeout(setTime, 1000);
@@ -55,6 +50,7 @@ function getDuration(seconds) {
 function timeSince(date) {
     var seconds = Math.floor((new Date() - new Date(date)) / 1000);
     var duration = getDuration(seconds);
+
     if (typeof(duration) != 'undefined')
     {
         var suffix = (duration.interval > 1 || duration.interval === 0) ? 's' : '';
@@ -62,6 +58,6 @@ function timeSince(date) {
     }
     else
     {
-        return 'updating...';
+        return 'moments ago';
     }
 };

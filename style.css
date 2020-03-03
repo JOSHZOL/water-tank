@@ -16,6 +16,20 @@ body {
     overflow: hidden;
 }
 
+#time {
+    position: relative;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+#time-text {
+    text-align: center;
+    font-size: 1em;
+}
+
 #depth {
     position: absolute;
     height: 80px;
@@ -26,11 +40,6 @@ body {
     margin: auto;
     font-weight: bold;
     font-size: 4em;
-}
-
-#time-text {
-    text-align: center;
-    font-size: 1em;
 }
 
 #depth-text {
