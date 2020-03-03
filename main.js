@@ -11,8 +11,7 @@ function gotResults(data) {
     document.getElementById("water").style.height = `${results.feeds[0].field2}%`;
 }
 
-(function setTime()
-{
+(function setTime() {
     if (typeof(results) != 'undefined') 
     {
         document.getElementById("time-text").innerHTML = timeSince(results.feeds[0].created_at);
