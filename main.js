@@ -15,7 +15,12 @@ function gotResults(data) {
 {
     if (typeof(results) != 'undefined') 
     {
-        document.getElementById("time-text").innerHTML = timeSince(results.feeds[0].created_at);
+        let timeValue = timeSince(results.feeds[0].created_at);
+        
+        if (document.getElementById("time-text").innerHTML != timeValue)
+        {
+            document.getElementById("time-text").innerHTML = timeValue;
+        }
     }
     
     setTimeout(setTime, 1000);
