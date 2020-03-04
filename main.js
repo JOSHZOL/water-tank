@@ -1,7 +1,8 @@
+let templateListItem = document.querySelector('#template');
+let listItem = templateListItem.content.querySelector('.list-item');
+
 let results;
 let waterDepth = 0;
-let waterPercentage = 0;
-let waterLitres = 0;
 let numberOfTanks = 2;
 
 (function getData() {
@@ -12,8 +13,8 @@ let numberOfTanks = 2;
 function gotResults(data) {
     results = data;
     waterDepthValues();
-    calculateValues();
-    updateHtml();
+    let values = calculateValues(waterDepth);
+    updateHtml(values.litres, values.percentage);
 }
 
 function waterDepthValues() {
@@ -26,18 +27,26 @@ function waterDepthValues() {
     waterDepth = median(depths);
 }
 
-function calculateValues() {
-    waterPercentage = (waterDepth / 218);
-    waterLitres = ((Math.PI * (1.8 * 1.8) * 2.18) * waterPercentage) * 10;
-    waterLitres = Math.floor(waterLitres);
-    waterLitres *= 100;
-    waterLitres *= numberOfTanks;
-    waterPercentage *= 100;
+function calculateValues(depth) {
+    let percentage, litres; 
+
+    percentage = depth / 218;
+    litres = ((Math.PI * (1.8 * 1.8) * 2.18) * percentage) * 10;
+    litres = Math.floor(litres);
+    litres *= 100;
+    litres *= numberOfTanks;
+    percentage *= 100;
+    percentage = Math.round(percentage);
+
+    return {
+        litres: litres,
+        percentage: percentage
+    }
 }
 
-function updateHtml() {
-    document.getElementById("depth-text").innerHTML = `${waterLitres}L`;
-    document.getElementById("water").style.height = `${waterPercentage}%`;
+function updateHtml(litres, percentage) {
+    document.getElementById("depth-text").innerHTML = `${litres}L`;
+    document.getElementById("water").style.height = `${percentage}%`;
 }
 
 (function setTime() {
@@ -47,6 +56,31 @@ function updateHtml() {
     
     setTimeout(setTime, 1000);
 })();
+
+(function getDailyData() {
+    $.getJSON('https://api.thingspeak.com/channels/950519/fields/1.json?api_key=NHWOOIO02CQMDZ25&days=14&median=daily', gotDailyResults);
+})();
+
+function gotDailyResults(data) {
+    for (let i = data.feeds.length - 2; i > 0; i--) {
+        let values = calculateValues(data.feeds[i].field1);
+
+        let date = new Intl.DateTimeFormat('en-NZ', {
+            weekday: 'long',
+            day: '2-digit',
+            month: 'long'
+        }).format(new Date(data.feeds[i].created_at));
+
+        AddListItem(date, values.litres, values.percentage);
+    }
+}
+
+function AddListItem(date, litres, percentage) {
+    let node = document.importNode(listItem, true);
+    let nodeLabel = node.querySelector('label');
+    node.innerHTML = `<span class="date">${date}</span> <span>${litres}L ${percentage}%</span>`
+    document.getElementById("list").appendChild(node);
+}
 
 let DURATION_IN_SECONDS = {
     epochs: ['day', 'hour', 'minute'],

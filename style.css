@@ -11,7 +11,7 @@ body {
 
 #tank {
     position: relative;
-    height: 100%;
+    height: 50%;
     background: linear-gradient(to top, #16222a, #3a6073);
     overflow: hidden;
 }
@@ -55,4 +55,30 @@ body {
     margin: 0;
     background: linear-gradient(to top left, #0b537b 0%, #81d1c8 100%);
     transition-duration: 0.75s;
+}
+
+#list {
+    max-height: 50%;
+    overflow: scroll;
+}
+
+.list-item {
+    position: relative;
+    height: 2em;
+    padding: 1em;
+    color: #000;
+    border-bottom: #cccccc solid 1px;
+}
+
+.list-item span {
+    position: absolute;
+    right: 1em;
+    height: 20px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.list-item .date {
+    left: 1em;
 }
