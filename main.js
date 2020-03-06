@@ -1,5 +1,4 @@
-let templateListItem = document.querySelector('#template');
-let listItem = templateListItem.content.querySelector('.list-item');
+let graphItem = document.querySelector('#template').content.querySelector('.graph-item');
 
 let results;
 let waterDepth = 0;
@@ -52,34 +51,60 @@ function updateHtml(litres, percentage) {
 (function setTime() {
     if (typeof(results) != 'undefined') {
         document.getElementById("time-text").innerHTML = timeSince(results.feeds[results.feeds.length - 1].created_at);
+        setTimeout(setTime, 1000);
+        return;
     }
-    
-    setTimeout(setTime, 1000);
+
+    setTimeout(setTime, 100);
 })();
 
 (function getDailyData() {
-    $.getJSON('https://api.thingspeak.com/channels/950519/fields/1.json?api_key=NHWOOIO02CQMDZ25&days=14&median=daily', gotDailyResults);
+    let date = new Date(Date.now());
+    date.setDate(date.getDate() - 1);
+    
+    let year = new Intl.DateTimeFormat('en-NZ', { year: 'numeric' }).format(date);
+    let month = new Intl.DateTimeFormat('en-NZ', { month: '2-digit' }).format(date);
+    let day = new Intl.DateTimeFormat('en-NZ', { day: '2-digit' }).format(date);
+
+    let end = ('end='+year+'-'+month+'-'+day+'%2023:59:59');
+
+    date.setDate(date.getDate() - 9);
+
+    year = new Intl.DateTimeFormat('en-NZ', { year: 'numeric' }).format(date);
+    month = new Intl.DateTimeFormat('en-NZ', { month: '2-digit' }).format(date);
+    day = new Intl.DateTimeFormat('en-NZ', { day: '2-digit' }).format(date);
+
+    let start = ('start='+year+'-'+month+'-'+day+'%2000:00:00');
+     
+    $.getJSON(`https://api.thingspeak.com/channels/950519/fields/1.json?api_key=NHWOOIO02CQMDZ25&${start}&${end}&timezone=Pacific%2FAuckland&median=daily`, gotDailyResults);
 })();
 
 function gotDailyResults(data) {
-    for (let i = data.feeds.length - 2; i > 0; i--) {
+    for (let i = data.feeds.length - 10; i < data.feeds.length; i++) {
         let values = calculateValues(data.feeds[i].field1);
 
         let date = new Intl.DateTimeFormat('en-NZ', {
-            weekday: 'long',
-            day: '2-digit',
-            month: 'long'
+            weekday: 'short'
         }).format(new Date(data.feeds[i].created_at));
 
-        AddListItem(date, values.litres, values.percentage);
+        if (date[0] == 'S' || date[0] == 'T') {
+            date = date[0] + date[1]; 
+        }
+        else {
+            date = date[0];
+        }
+
+        AddGraphItem(date, values.litres, values.percentage);
     }
 }
 
-function AddListItem(date, litres, percentage) {
-    let node = document.importNode(listItem, true);
-    let nodeLabel = node.querySelector('label');
-    node.innerHTML = `<span class="date">${date}</span> <span>${litres}L ${percentage}%</span>`
-    document.getElementById("list").appendChild(node);
+function AddGraphItem(date, litres, percentage) {
+    let node = document.importNode(graphItem, true);
+    let nodeWater = node.querySelector('.graph-item-water');
+    let nodeDay = node.querySelector('.graph-item-day');
+    nodeWater.style.height = `calc(75% * ${percentage / 100})`
+    nodeDay.innerHTML = date;
+    document.getElementById("graph").appendChild(node);
 }
 
 let DURATION_IN_SECONDS = {

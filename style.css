@@ -57,28 +57,51 @@ body {
     transition-duration: 0.75s;
 }
 
-#list {
-    max-height: 50%;
-    overflow: scroll;
+.pad {
+    height: 5%;
 }
 
-.list-item {
+#graph {
     position: relative;
-    height: 2em;
-    padding: 1em;
-    color: #000;
-    border-bottom: #cccccc solid 1px;
+    height: 25%;
+    width: 100%;
+    font-size: 0;
 }
 
-.list-item span {
+#graph-background {
     position: absolute;
-    right: 1em;
-    height: 20px;
-    top: 0;
-    bottom: 0;
-    margin: auto;
+    bottom: 20%;
+    top: 5%;
+    width: 100%;
+    background: repeating-linear-gradient(to top, #ddd, #ddd 1px, #fff0 1px, #fff0 calc(25% - 0.25px));
 }
 
-.list-item .date {
-    left: 1em;
+.graph-item {
+    position: relative;
+    display: inline-block;
+    height: 100%;
+    width: 10%;
+}
+
+.graph-item-water {
+    position: absolute;
+    bottom: 20%;
+    left: 0;
+    right: 0;
+    height: calc(75% * 0.1);
+    width: 75%;
+    margin: auto;
+    background: #4894a3;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.graph-item-day {
+    position: absolute;
+    bottom: 0;
+    height: 18%;
+    width: 100%;
+    text-align: center;
+    font-size: 16px !important;
+    color: #676767;
 }
