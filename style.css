@@ -2,6 +2,7 @@ html {
     height: 100%;
     font-family: 'Quicksand', sans-serif;
     color:#fff;
+    background-color: #080808;
 }
 
 body {
@@ -12,8 +13,10 @@ body {
 #tank {
     position: relative;
     height: 50%;
-    background: linear-gradient(to top, #16222a, #3a6073);
     overflow: hidden;
+    background: linear-gradient(to bottom, #333538, #232325);
+    margin: 16px;
+    border-radius: 10px;
 }
 
 #time {
@@ -53,34 +56,69 @@ body {
     width: 100%;
     bottom: 0px;
     margin: 0;
-    background: linear-gradient(to top left, #0b537b 0%, #81d1c8 100%);
+    background: linear-gradient(to top, #0b537b, #81d1c8);
     transition-duration: 0.75s;
 }
 
-.pad {
-    height: 5%;
+#graph-header {
+    position: relative;
+    height: 2.5%;
+    font-size: 0;
+    background-color: #333538;
+    margin: 0 16px;
+    margin-bottom: -1px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 #graph {
     position: relative;
     height: 25%;
-    width: 100%;
     font-size: 0;
+    background: linear-gradient(to bottom, #333538, #232325);
+    margin: 16px;
+    margin-top: 0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 #graph-background {
     position: absolute;
     bottom: 20%;
     top: 5%;
-    width: 100%;
-    background: repeating-linear-gradient(to top, #ddd, #ddd 1px, #fff0 1px, #fff0 calc(25% - 0.25px));
+    right: 1%;
+    width: 87.5%;
+    background: repeating-linear-gradient(to top, #434548, #434548 1px, #fff0 1px, #fff0 calc(25% - 0.25px));
+}
+
+.graph-measure {
+    position: relative;
+    display: inline-block;
+    height: 100%;
+    width: 11.5%;
+}
+
+.graph-measure-number-wrap {
+    position: absolute;
+    bottom: 5%;
+    left: 0;
+    right: 0;
+    height: 94%;
+    width: 85%;
+}
+
+.graph-measure-number {
+    height: 20%;
+    font-size: 13px;
+    color: #909090;
+    text-align: right;
 }
 
 .graph-item {
     position: relative;
     display: inline-block;
     height: 100%;
-    width: 10%;
+    width: 12.5%;
 }
 
 .graph-item-water {
@@ -88,12 +126,13 @@ body {
     bottom: 20%;
     left: 0;
     right: 0;
-    height: calc(75% * 0.1);
+    height: calc(75% * 0);
     width: 75%;
     margin: auto;
-    background: #4894a3;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    background: linear-gradient(to top, #0b537b, #81d1c8);
+    transition-duration: 0.75s;
 }
 
 .graph-item-day {
@@ -103,5 +142,5 @@ body {
     width: 100%;
     text-align: center;
     font-size: 16px !important;
-    color: #676767;
+    color: #909090;
 }

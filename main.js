@@ -68,7 +68,7 @@ function updateHtml(litres, percentage) {
 
     let end = ('end='+year+'-'+month+'-'+day+'%2023:59:59');
 
-    date.setDate(date.getDate() - 9);
+    date.setDate(date.getDate() - 8);
 
     year = new Intl.DateTimeFormat('en-NZ', { year: 'numeric' }).format(date);
     month = new Intl.DateTimeFormat('en-NZ', { month: '2-digit' }).format(date);
@@ -80,7 +80,7 @@ function updateHtml(litres, percentage) {
 })();
 
 function gotDailyResults(data) {
-    for (let i = data.feeds.length - 10; i < data.feeds.length; i++) {
+    for (let i = data.feeds.length - 7; i < data.feeds.length; i++) {
         let values = calculateValues(data.feeds[i].field1);
 
         let date = new Intl.DateTimeFormat('en-NZ', {
@@ -102,9 +102,9 @@ function AddGraphItem(date, litres, percentage) {
     let node = document.importNode(graphItem, true);
     let nodeWater = node.querySelector('.graph-item-water');
     let nodeDay = node.querySelector('.graph-item-day');
-    nodeWater.style.height = `calc(75% * ${percentage / 100})`
     nodeDay.innerHTML = date;
     document.getElementById("graph").appendChild(node);
+    setTimeout(() => { nodeWater.style.height = `calc(75% * ${percentage / 100})` }, 10);
 }
 
 let DURATION_IN_SECONDS = {
