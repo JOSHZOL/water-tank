@@ -67,10 +67,8 @@ body {
 #graph-header {
     position: relative;
     height: 2.5%;
-    font-size: 0;
     background-color: #333538;
-    margin: 0 16px;
-    margin-bottom: -1px;
+    margin: 0 16px -1px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
@@ -80,8 +78,7 @@ body {
     height: 25%;
     font-size: 0;
     background: linear-gradient(to bottom, #333538, #232325);
-    margin: 16px;
-    margin-top: 0;
+    margin: 0 16px 16px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
