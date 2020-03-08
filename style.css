@@ -18,6 +18,7 @@ body {
     left: 0;
     right: 0;
     margin: 0;
+    overflow: scroll;
 }
 
 #tank {
@@ -222,7 +223,7 @@ body {
 
 #stats {
     position: relative;
-    height: calc(15% - 20px);
+    height: calc(14% - 20px);
     min-height: 50px;
     overflow: hidden;
     background: linear-gradient(to bottom, #333538, #232325);
