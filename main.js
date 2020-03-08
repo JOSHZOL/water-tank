@@ -4,6 +4,9 @@ let results;
 let waterDepth = 0;
 let numberOfTanks = 2;
 
+let dailyResults = 0;
+let weeklyResults = [];
+
 (function getData() {
     $.getJSON('https://api.thingspeak.com/channels/950519/fields/1.json?api_key=NHWOOIO02CQMDZ25&results=10', gotResults);
     setTimeout(getData, 30000);
@@ -59,34 +62,37 @@ function updateHtml(litres, percentage) {
 })();
 
 (function getDailyData() {
-    let date = new Date(Date.now());
-    date.setDate(date.getDate() - 1);
-    
-    let year = new Intl.DateTimeFormat('en-NZ', { year: 'numeric' }).format(date);
-    let month = new Intl.DateTimeFormat('en-NZ', { month: '2-digit' }).format(date);
-    let day = new Intl.DateTimeFormat('en-NZ', { day: '2-digit' }).format(date);
-
-    let end = ('end='+year+'-'+month+'-'+day+'%2023:59:59');
-
-    date = new Date(Date.now());
-    date.setDate(date.getDate() - 10);
-
-    year = new Intl.DateTimeFormat('en-NZ', { year: 'numeric' }).format(date);
-    month = new Intl.DateTimeFormat('en-NZ', { month: '2-digit' }).format(date);
-    day = new Intl.DateTimeFormat('en-NZ', { day: '2-digit' }).format(date);
-
-    let start = ('start='+year+'-'+month+'-'+day+'%2000:00:00');
-     
-    $.getJSON(`https://api.thingspeak.com/channels/950519/fields/1.json?api_key=NHWOOIO02CQMDZ25&${start}&${end}&timezone=Pacific%2FAuckland&median=daily`, gotDailyResults);
+    let timeRange = getDateRange(10);
+    $.getJSON(`https://api.thingspeak.com/channels/950519/fields/1.json?api_key=NHWOOIO02CQMDZ25&${timeRange.start}&${timeRange.end}&timezone=Pacific%2FAuckland&median=daily`, gotDailyResults);
 })();
 
+(function getWeeklyData() {
+    let timeRange = getDateRange(30);
+    $.getJSON(`https://api.thingspeak.com/channels/950519/fields/1.json?api_key=NHWOOIO02CQMDZ25&${timeRange.start}&${timeRange.end}&timezone=Pacific%2FAuckland&median=daily`, gotWeeklyResults);
+})();
+
+document.querySelector('#graph-header-daily').addEventListener('click', function () {
+    showDailyResults();
+})
+
+document.querySelector('#graph-header-weekly').addEventListener('click', function () {
+    showWeeklyResults();
+})
+
 function gotDailyResults(data) {
-    for (let i = 0; i < data.feeds.length; i++) {
-        let values = calculateValues(data.feeds[i].field1);
+    dailyResults = data.feeds;
+    showDailyResults();
+}
+
+function showDailyResults() {
+    ClearGraphItems();
+    
+    for (let i = 0; i < dailyResults.length; i++) {
+        let values = calculateValues(dailyResults[i].field1);
 
         let date = new Intl.DateTimeFormat('en-NZ', {
             weekday: 'short'
-        }).format(new Date(data.feeds[i].created_at));
+        }).format(new Date(dailyResults[i].created_at));
 
         if (date[0] == 'S' || date[0] == 'T') {
             date = date[0] + date[1]; 
@@ -95,18 +101,48 @@ function gotDailyResults(data) {
             date = date[0];
         }
 
-        AddGraphItem(date, values.litres, values.percentage, data.feeds.length);
+        AddGraphItem(date, values.litres, values.percentage, dailyResults.length);
+    }
+}
+
+function gotWeeklyResults(data) {
+    for (let i = data.feeds.length - 1; i > 0; i -= 7) {
+        weeklyResults.push(data.feeds[i]);
+        if (weeklyResults.length >= 4) {
+            break;
+        }
+    }
+
+    weeklyResults.reverse();
+}
+
+function showWeeklyResults() {
+    ClearGraphItems();
+
+    for (let i = 0; i < weeklyResults.length; i++) {
+        let values = calculateValues(weeklyResults[i].field1);
+
+        let date = new Intl.DateTimeFormat('en-NZ', {
+            day: 'numeric',
+            month: 'short'
+        }).format(new Date(weeklyResults[i].created_at));
+
+        AddGraphItem(date, values.litres, values.percentage, weeklyResults.length);
     }
 }
 
 function AddGraphItem(date, litres, percentage, totalItems) {
     let node = document.importNode(graphItem, true);
-    node.style.width = `calc(87.5% / ${totalItems})`
+    node.style.width = `calc((100% - 50px) / ${totalItems})`
     let nodeWater = node.querySelector('.graph-item-water');
     let nodeDay = node.querySelector('.graph-item-day');
     nodeDay.innerHTML = date;
     document.getElementById("graph").appendChild(node);
     setTimeout(() => { nodeWater.style.height = `calc(75% * ${percentage / 100})` }, 10);
+}
+
+function ClearGraphItems() {
+    document.querySelectorAll('.graph-item').forEach(element => element.remove());
 }
 
 let DURATION_IN_SECONDS = {
@@ -158,4 +194,29 @@ function median(numbers) {
     }
  
     return median;
+}
+
+function getDateRange(daysAgo) {
+    let date = new Date(Date.now());
+    date.setDate(date.getDate() - 1);
+    
+    let year = new Intl.DateTimeFormat('en-NZ', { year: 'numeric' }).format(date);
+    let month = new Intl.DateTimeFormat('en-NZ', { month: '2-digit' }).format(date);
+    let day = new Intl.DateTimeFormat('en-NZ', { day: '2-digit' }).format(date);
+
+    let end = ('end='+year+'-'+month+'-'+day+'%2023:59:59');
+
+    date = new Date(Date.now());
+    date.setDate(date.getDate() - daysAgo);
+
+    year = new Intl.DateTimeFormat('en-NZ', { year: 'numeric' }).format(date);
+    month = new Intl.DateTimeFormat('en-NZ', { month: '2-digit' }).format(date);
+    day = new Intl.DateTimeFormat('en-NZ', { day: '2-digit' }).format(date);
+
+    let start = ('start='+year+'-'+month+'-'+day+'%2000:00:00');
+
+    return {
+        start: start,
+        end: end
+    }
 }

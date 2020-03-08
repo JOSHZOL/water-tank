@@ -17,6 +17,7 @@ body {
 #tank {
     position: relative;
     height: 50%;
+    min-height: 200px;
     overflow: hidden;
     background: linear-gradient(to bottom, #333538, #232325);
     margin: 16px;
@@ -66,16 +67,54 @@ body {
 
 #graph-header {
     position: relative;
-    height: 2.5%;
+    height: 5%;
+    min-height: 36px;
+    font-size: 0;
     background-color: #333538;
     margin: 0 16px -1px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
 
+#graph-header-wrap {
+    display: inline-block;
+    width: calc(100% - 8px);
+    height: 25px;
+    background-color: #333538;
+    margin: 4px;
+    border-radius: 10px;
+}
+
+#graph-header-wrap div {
+    position: absolute;
+    width: calc(50% - 16px);
+    height: 21px;
+    background-color: #434447;
+    margin: 4px 4px 0;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #cecece;
+    text-align: center;
+}
+
+#graph-header-wrap div:active {
+    background-color: #333538;
+    color: #7e7e7e;
+}
+
+#graph-header-daily {
+    left: 6px;
+}
+
+#graph-header-weekly {
+    right: 6px;
+}
+
 #graph {
     position: relative;
     height: 25%;
+    min-height: 140px;
     font-size: 0;
     background: linear-gradient(to bottom, #333538, #232325);
     margin: 0 16px 16px;
@@ -87,8 +126,8 @@ body {
     position: absolute;
     bottom: 20%;
     top: 5%;
-    right: 1%;
-    width: 87.5%;
+    right: 6px;
+    width: calc(100% - 50px);
     background: repeating-linear-gradient(to top, #434548, #434548 1px, #fff0 1px, #fff0 calc(25% - 0.25px));
 }
 
@@ -96,7 +135,7 @@ body {
     position: relative;
     display: inline-block;
     height: 100%;
-    width: 11.5%;
+    width: 44px;
 }
 
 .graph-measure-number-wrap {
@@ -119,7 +158,6 @@ body {
     position: relative;
     display: inline-block;
     height: 100%;
-    width: 12.5%;
 }
 
 .graph-item-water {
