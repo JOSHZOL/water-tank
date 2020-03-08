@@ -68,7 +68,7 @@ body {
 #graph-header {
     position: relative;
     height: 5%;
-    min-height: 36px;
+    min-height: 41px;
     font-size: 0;
     background-color: #333538;
     margin: 0 16px -1px;
@@ -76,39 +76,39 @@ body {
     border-top-right-radius: 10px;
 }
 
-#graph-header-wrap {
-    display: inline-block;
-    width: calc(100% - 8px);
+#graph-header-select {
+    position: absolute;
+    width: calc(50% - 16px);
     height: 25px;
-    background-color: #333538;
-    margin: 4px;
-    border-radius: 10px;
+    background-color: #434447;
+    margin-top: 8px;
+    border-radius: 6px;
+    transition-duration: 0.25s;
+    left: 10px;
 }
 
-#graph-header-wrap div {
+.select-weekly {
+    transform: translateX(calc(100% + 12px));
+}
+
+#graph-header-daily, 
+#graph-header-weekly {
     position: absolute;
     width: calc(50% - 16px);
     height: 21px;
-    background-color: #434447;
-    margin: 4px 4px 0;
-    border-radius: 6px;
+    margin-top: 10px;
     font-size: 15px;
     font-weight: bold;
     color: #cecece;
     text-align: center;
 }
 
-#graph-header-wrap div:active {
-    background-color: #333538;
-    color: #7e7e7e;
-}
-
 #graph-header-daily {
-    left: 6px;
+    left: 10px;
 }
 
 #graph-header-weekly {
-    right: 6px;
+    right: 10px;
 }
 
 #graph {

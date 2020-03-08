@@ -85,6 +85,7 @@ function gotDailyResults(data) {
 }
 
 function showDailyResults() {
+    document.querySelector('#graph-header-select').classList.remove('select-weekly');
     ClearGraphItems();
     
     for (let i = 0; i < dailyResults.length; i++) {
@@ -117,6 +118,7 @@ function gotWeeklyResults(data) {
 }
 
 function showWeeklyResults() {
+    document.querySelector('#graph-header-select').classList.add('select-weekly');
     ClearGraphItems();
 
     for (let i = 0; i < weeklyResults.length; i++) {
