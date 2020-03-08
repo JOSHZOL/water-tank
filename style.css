@@ -22,10 +22,10 @@ body {
 
 #tank {
     position: relative;
-    height: calc(50% - 32px);
+    height: calc(50% - 20px);
     overflow: hidden;
     background: linear-gradient(to bottom, #333538, #232325);
-    margin: 16px;
+    margin: 10px;
     border-radius: 10px;
 }
 
@@ -76,7 +76,7 @@ body {
     min-height: 41px;
     font-size: 0;
     background-color: #333538;
-    margin: 0 16px -1px;
+    margin: 0 10px -1px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
@@ -122,7 +122,7 @@ body {
     min-height: 140px;
     font-size: 0;
     background: linear-gradient(to bottom, #333538, #232325);
-    margin: 0 16px 16px;
+    margin: 0 10px 10px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
@@ -189,13 +189,44 @@ body {
     color: #909090;
 }
 
+#stats-header {
+    position: relative;
+    height: 5%;
+    min-height: 41px;
+    font-size: 0;
+    background-color: #434447;
+    margin: 0 10px -1px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+#stats-header-daily, 
+#stats-header-weekly {
+    position: absolute;
+    width: 50%;
+    height: 21px;
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #cecece;
+    text-align: center;
+}
+
+#stats-header-daily {
+    left: 0px;
+}
+
+#stats-header-weekly {
+    right: 0px;
+}
+
 #stats {
     position: relative;
-    height: calc(15% - 32px);
+    height: calc(15% - 20px);
     min-height: 50px;
     overflow: hidden;
     background: linear-gradient(to bottom, #333538, #232325);
-    margin: 0 16px 16px;
+    margin: 0 10px 10px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
@@ -232,35 +263,4 @@ body {
     margin: 0;
     font-weight: bold;
     font-size: 2em;
-}
-
-#stats-header {
-    position: relative;
-    height: 5%;
-    min-height: 41px;
-    font-size: 0;
-    background-color: #434447;
-    margin: 0 16px -1px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-
-#stats-header-daily, 
-#stats-header-weekly {
-    position: absolute;
-    width: 50%;
-    height: 21px;
-    margin-top: 10px;
-    font-size: 15px;
-    font-weight: bold;
-    color: #cecece;
-    text-align: center;
-}
-
-#stats-header-daily {
-    left: 0px;
-}
-
-#stats-header-weekly {
-    right: 0px;
 }

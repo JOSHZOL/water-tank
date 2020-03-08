@@ -82,8 +82,6 @@ document.querySelector('#graph-header-weekly').addEventListener('click', functio
 function gotDailyResults(data) {
     dailyResults = data.feeds;
     showDailyResults();
-    calculateDailyUse();
-    calculateDaysLeft();
 }
 
 function showDailyResults() {
@@ -108,39 +106,6 @@ function showDailyResults() {
     }
 }
 
-function calculateDailyUse() {
-    let averageDailyUse = 0;
-    let numberOfDays = 0;
-    let prevousDayLitres = 0;
-
-    for (let i = 0; i < dailyResults.length; i++) {
-        let values = calculateValues(dailyResults[i].field1);
-
-        if (prevousDayLitres > values.litres)
-        {
-            averageDailyUse += prevousDayLitres - values.litres;
-            numberOfDays++;
-        }
-
-        prevousDayLitres = values.litres;
-    }
-
-    averageUsage = averageDailyUse / numberOfDays;
-    averageDailyUse = `${Math.round(averageDailyUse / numberOfDays)}L`;
-
-    document.querySelector('#usage-text').innerHTML = averageDailyUse;
-}
-
-function calculateDaysLeft() {
-    if (waterDepth != null) {
-        let daysleft = Math.floor(calculateValues(waterDepth).litres / averageUsage);
-
-        document.querySelector('#days-left-text').innerHTML = daysleft;
-    } else {
-        setTimeout(calculateDaysLeft, 10);
-    }
-}
-
 function gotWeeklyResults(data) {
     for (let i = data.feeds.length - 1; i > 0; i -= 7) {
         weeklyResults.push(data.feeds[i]);
@@ -150,6 +115,9 @@ function gotWeeklyResults(data) {
     }
 
     weeklyResults.reverse();
+
+    calculateDailyUse(data.feeds);
+    calculateDaysLeft();
 }
 
 function showWeeklyResults() {
@@ -180,6 +148,39 @@ function AddGraphItem(date, litres, percentage, totalItems) {
 
 function ClearGraphItems() {
     document.querySelectorAll('.graph-item').forEach(element => element.remove());
+}
+
+function calculateDailyUse(data) {
+    let averageDailyUse = 0;
+    let numberOfDays = 0;
+    let prevousDayLitres = 0;
+
+    for (let i = 0; i < data.length; i++) {
+        let values = calculateValues(data[i].field1);
+
+        if (prevousDayLitres > values.litres)
+        {
+            averageDailyUse += prevousDayLitres - values.litres;
+            numberOfDays++;
+        }
+
+        prevousDayLitres = values.litres;
+    }
+
+    averageUsage = averageDailyUse / numberOfDays;
+    averageDailyUse = `${Math.round(averageDailyUse / numberOfDays)}L`;
+
+    document.querySelector('#usage-text').innerHTML = averageDailyUse;
+}
+
+function calculateDaysLeft() {
+    if (waterDepth != null) {
+        let daysleft = Math.floor(calculateValues(waterDepth).litres / averageUsage);
+
+        document.querySelector('#days-left-text').innerHTML = daysleft;
+    } else {
+        setTimeout(calculateDaysLeft, 10);
+    }
 }
 
 let DURATION_IN_SECONDS = {
