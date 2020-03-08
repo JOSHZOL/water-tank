@@ -22,8 +22,7 @@ body {
 
 #tank {
     position: relative;
-    height: 50%;
-    min-height: 200px;
+    height: calc(50% - 32px);
     overflow: hidden;
     background: linear-gradient(to bottom, #333538, #232325);
     margin: 16px;
@@ -100,7 +99,7 @@ body {
 #graph-header-daily, 
 #graph-header-weekly {
     position: absolute;
-    width: calc(50% - 16px);
+    width: 50%;
     height: 21px;
     margin-top: 10px;
     font-size: 15px;
@@ -110,11 +109,11 @@ body {
 }
 
 #graph-header-daily {
-    left: 10px;
+    left: 0px;
 }
 
 #graph-header-weekly {
-    right: 10px;
+    right: 0px;
 }
 
 #graph {
@@ -188,4 +187,80 @@ body {
     text-align: center;
     font-size: 16px !important;
     color: #909090;
+}
+
+#stats {
+    position: relative;
+    height: calc(15% - 32px);
+    min-height: 50px;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #333538, #232325);
+    margin: 0 16px 16px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+#usage {
+    position: absolute;
+    height: 40px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 50%;
+    margin: auto;
+}
+
+#usage-text {
+    text-align: center;
+    margin: 0;
+    font-weight: bold;
+    font-size: 2em;
+}
+
+#days-left {
+    position: absolute;
+    height: 40px;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    right: 0;
+    margin: auto;
+}
+
+#days-left-text {
+    text-align: center;
+    margin: 0;
+    font-weight: bold;
+    font-size: 2em;
+}
+
+#stats-header {
+    position: relative;
+    height: 5%;
+    min-height: 41px;
+    font-size: 0;
+    background-color: #434447;
+    margin: 0 16px -1px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+#stats-header-daily, 
+#stats-header-weekly {
+    position: absolute;
+    width: 50%;
+    height: 21px;
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #cecece;
+    text-align: center;
+}
+
+#stats-header-daily {
+    left: 0px;
+}
+
+#stats-header-weekly {
+    right: 0px;
 }
