@@ -8,7 +8,7 @@ let dailyResults = 0;
 let weeklyResults = [];
 
 (function getData() {
-    $.getJSON('https://api.thingspeak.com/channels/950519/fields/1.json?api_key=NHWOOIO02CQMDZ25&results=10', gotResults);
+    $.getJSON('https://api.thingspeak.com/channels/950519/fields/1.json?api_key=NHWOOIO02CQMDZ25&results=3', gotResults);
     setTimeout(getData, 30000);
 })();
 
