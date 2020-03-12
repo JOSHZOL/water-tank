@@ -29,12 +29,12 @@ function waterDepthValues() {
     waterDepth = median(depths);
 }
 
-function calculateValues(depth) {
-    let percentage, litres; 
+function calculateValues(depth, round=true) {
+    let percentage, litres;
 
     percentage = depth / 218;
     litres = ((Math.PI * (1.8 * 1.8) * 2.18) * percentage) * 10;
-    litres = Math.floor(litres);
+    round ? litres = Math.floor(litres) : null;
     litres *= 100;
     litres *= numberOfTanks;
     percentage *= 100;
@@ -154,11 +154,10 @@ function calculateDailyUse(data) {
     let averageDailyUse = 0;
     let numberOfDays = 0;
     let prevousDayLitres = 0;
-    let daysSkiped = 0;
 
     for (let i = 0; i < data.length; i++) {
         if (data[i].field1 != null) {
-            let values = calculateValues(data[i].field1);
+            let values = calculateValues(data[i].field1, false);
 
             if (prevousDayLitres > values.litres)
             {
