@@ -43,6 +43,19 @@ body {
     font-size: 1em;
 }
 
+#temperature {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+#temperature-text {
+    text-align: center;
+    font-size: 1em;
+}
+
 #depth {
     position: absolute;
     height: 80px;

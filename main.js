@@ -8,7 +8,7 @@ let dailyResults = 0;
 let weeklyResults = [];
 
 (function getData() {
-    $.getJSON('https://api.thingspeak.com/channels/950519/fields/1.json?api_key=NHWOOIO02CQMDZ25&results=3', gotResults);
+    $.getJSON('https://api.thingspeak.com/channels/950519/feeds.json?api_key=NHWOOIO02CQMDZ25&results=3', gotResults);
     setTimeout(getData, 30000);
 })();
 
@@ -47,8 +47,12 @@ function calculateValues(depth, round=true) {
 }
 
 function updateHtml(litres, percentage) {
+    let temperature = results.feeds[results.feeds.length - 1].field2;
+    temperature = Math.round(temperature * 10) / 10;
+
     document.getElementById("depth-text").innerHTML = `${litres}L`;
     document.getElementById("water").style.height = `${percentage}%`;
+    document.getElementById("temperature-text").innerHTML = `${temperature}°C`;
 }
 
 (function setTime() {
