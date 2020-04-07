@@ -162,14 +162,17 @@ function calculateDailyUse(data) {
     for (let i = 0; i < data.length; i++) {
         if (data[i].field1 != null) {
             let values = calculateValues(data[i].field1, false);
-
-            if (prevousDayLitres > values.litres)
+            
+            if (values.litres >= 0)
             {
-                averageDailyUse += prevousDayLitres - values.litres;
-                numberOfDays++;
-            }
+                if (prevousDayLitres > values.litres)
+                {
+                    averageDailyUse += prevousDayLitres - values.litres;
+                    numberOfDays++;
+                }
 
-            prevousDayLitres = values.litres;
+                prevousDayLitres = values.litres;
+            }
         } else {
             numberOfDays++;
         }
