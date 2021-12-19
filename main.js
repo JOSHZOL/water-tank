@@ -184,14 +184,23 @@ function calculateDailyUse(data) {
     averageUsage = averageDailyUse / numberOfDays;
     averageDailyUse = `${Math.round(averageDailyUse / numberOfDays)}L`;
 
-    document.querySelector('#usage-text').innerHTML = averageDailyUse;
+    if ($.isNumeric(averageUsage)) {
+        document.querySelector('#usage-text').innerHTML = averageDailyUse;
+    } else {
+        document.querySelector('#usage-text').innerHTML = "-";
+    }
 }
 
 function calculateDaysLeft() {
     if (waterDepth != null) {
         let daysleft = Math.floor(calculateValues(waterDepth).litres / averageUsage);
 
-        document.querySelector('#days-left-text').innerHTML = daysleft;
+        if ($.isNumeric(daysleft)) {
+            document.querySelector('#days-left-text').innerHTML = daysleft;
+        } else {
+            document.querySelector('#days-left-text').innerHTML = "-";
+        }
+        
     } else {
         setTimeout(calculateDaysLeft, 10);
     }
