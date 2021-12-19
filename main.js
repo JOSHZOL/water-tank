@@ -7,6 +7,8 @@ let averageUsage;
 let dailyResults = 0;
 let weeklyResults = [];
 
+let distanceToEmpty = 232; // in cm
+
 (function getData() {
     $.getJSON('https://api.thingspeak.com/channels/950519/feeds.json?api_key=NHWOOIO02CQMDZ25&results=3', gotResults);
     setTimeout(getData, 30000);
@@ -32,6 +34,7 @@ function waterDepthValues() {
 function calculateValues(depth, round=true) {
     let percentage, litres;
 
+    depth = distanceToEmpty - depth;
     percentage = depth / 218;
     litres = ((Math.PI * (1.8 * 1.8) * 2.18) * percentage) * 10;
     round ? litres = Math.floor(litres) : null;
